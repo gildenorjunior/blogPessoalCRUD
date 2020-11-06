@@ -7,44 +7,45 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name="tb_postagem")
-public class PostagemModel 
-{
-	
-	//ATRIBUTOS
+@Table(name = "tb_postagem")
+public class Postagem {
+
+	// ATRIBUTOS
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	
+
 	@Column
 	@NotNull
-	@Size(min =5, max =100)
+	@Size(min = 5, max = 100)
 	private String titulo;
-	
+
 	@Column
 	@NotNull
-	private String autor;
-	
-	@Column
-	@NotNull
-	@Size(min =5, max =1000)
-	private String descricao;
-	
+	@Size(min = 5, max = 500)
+	private String texto;
+
+
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date data= new java.sql.Date(System.currentTimeMillis());
+	private Date data = new java.sql.Date(System.currentTimeMillis());
+
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Tema tema;
+
 	
-	
-	
-	//GETTERS AND SETTERS
+	//MÉTODOS GETTERS AND SETTERS
 	public Long getId() {
 		return Id;
 	}
@@ -61,24 +62,30 @@ public class PostagemModel
 		this.titulo = titulo;
 	}
 
-	public String getAutor() {
-		return autor;
+	public String getTexto() {
+		return texto;
 	}
 
-	public void setAutor(String autor) {
-		this.autor = autor;
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public Date getData() {
+		return data;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setData(Date data) {
+		this.data = data;
 	}
 
+	public Tema getTema() {
+		return tema;
+	}
+
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
 
 	
-	
-	
+
 }
