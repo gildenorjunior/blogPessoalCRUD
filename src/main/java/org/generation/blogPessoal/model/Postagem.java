@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,12 +35,19 @@ public class Postagem {
 	@NotNull
 	@Size(min = 5, max = 500)
 	private String texto;
+	
+	@NotNull
 
+	private int ano;
 
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
+//	@Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+//	@Temporal(TemporalType.TIMESTAMP)
+//	@CreationTimestamp
 	private Date data = new java.sql.Date(System.currentTimeMillis());
 
+	//muitas postagens pertencem a um tema
 	@ManyToOne
 	@JsonIgnoreProperties("postagem")
 	private Tema tema;
@@ -84,6 +92,14 @@ public class Postagem {
 
 	public void setTema(Tema tema) {
 		this.tema = tema;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
 	}
 
 	

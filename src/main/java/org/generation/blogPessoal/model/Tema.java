@@ -25,6 +25,7 @@ public class Tema {
 	private String descricao;
 	
 	//MappedBy - qual atributo estamos mapeando		//cascade all serve para a integridade do banco, coisas que se relacionam afetam uma as outras
+	//um tema tem muitas postagens
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL) 
 	@JsonIgnoreProperties("tema")//apartir de qual propriedade vamos ignorar
 	private List<Postagem> postagem;

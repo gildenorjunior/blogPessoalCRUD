@@ -27,7 +27,7 @@ public class PostagemController implements WebMvcConfigurer
 	@Autowired
 	private PostagemRepository repository;
 	
-
+	//
 	@GetMapping 
 	public ResponseEntity<List<Postagem>> findAllPostagem() 
 	{		
@@ -38,14 +38,34 @@ public class PostagemController implements WebMvcConfigurer
 	public ResponseEntity<Postagem>findByIdPostagem(@PathVariable Long id) 
 	{		
 		return repository.findById(id)
-				.map(postagemId -> ResponseEntity.ok(postagemId))
-				.orElse(ResponseEntity.notFound().build());
+				.map(resp -> ResponseEntity.ok(resp)) //se tiver o id retorne ok
+				.orElse(ResponseEntity.notFound().build()); //senão retorne o notfound
 	}
 	
 	@GetMapping ("/titulo/{titulo}")
 	public ResponseEntity<List<Postagem>> findAllByTitulo(@PathVariable String titulo) 
 	{		
 		return ResponseEntity.ok(repository.findAllByTituloContainingIgnoreCase(titulo));
+	}
+	
+	@GetMapping(value = "/maior")
+	public ResponseEntity<List<Postagem>> findAllMaior(){
+		return ResponseEntity.ok(repository.findAllMaior());
+	}
+	
+	@GetMapping(value = "/ordem")
+	public ResponseEntity<List<Postagem>> anoDesc(){
+		return ResponseEntity.ok(repository.anoDesc());
+	}
+	
+	@GetMapping(value = "/asc")
+	public ResponseEntity<List<Postagem>> anoAsc(){
+		return ResponseEntity.ok(repository.anoAsc());
+	}
+	
+	@GetMapping(value = "/intervalo")
+	public ResponseEntity<List<Postagem>> anoIntervalo(){
+		return ResponseEntity.ok(repository.anoIntervalo());
 	}
 	
 	@PostMapping
